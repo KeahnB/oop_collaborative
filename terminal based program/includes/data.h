@@ -1,9 +1,11 @@
 #ifndef DATA_H
 #define DATA_H
+
 #include <iostream>
+#include "listdata.h"
 using namespace std;
 
-class Data
+class Data : public Listdata
 {
 protected:
     string name;   // name of user or stock owner
@@ -18,7 +20,8 @@ public:
     virtual void set_name(string) = 0;
     virtual void set_data(string) = 0;
     virtual void set_amount(double) = 0;
-
+    
+    Data();
     Data(string, string, double);
 
     virtual ~Data();

@@ -7,6 +7,7 @@ class Stock : public Data {
 private:
     int stock;
 public:
+    Stock();
     Stock(string, string, double, int);
     string get_name();
     string get_data();
@@ -17,8 +18,6 @@ public:
     void set_data();
     void set_amount();
     void set_stock();
-    
-    void listdata();
 
     ~Stock();
 };

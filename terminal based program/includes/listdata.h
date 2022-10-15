@@ -4,7 +4,7 @@
 class Listdata
 {
 public:
-    void list();
+    virtual void list_data() = 0;
 };
 
 #endif

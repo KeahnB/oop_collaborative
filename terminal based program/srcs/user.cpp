@@ -5,7 +5,7 @@ User::User()
 {
     name = "N/A";
     data = "N/A";
-    amount = 0;
+    amount = 0.0;
     stock = new vector<Stock*>;
     stock->clear();
 }
@@ -26,20 +26,32 @@ User::User(string new_name, string new_data, double new_amount, vector<Stock*> n
     *stock = new_stock;
 }
 
-void buy_stock(Stock* new_stock, int stock_amount) {
-
+void User::list_data(Stock* stock_type) {
+    for (int i = 0; i < stock->size(); i++) {
+        if (stock->at(i)->get_name() == stock_type->get_name()) {
+            cout << "$Stock Name: " << stock->at(i)->get_name() << endl;
+            cout << "$Stock Producer: " << stock->at(i)->get_data() << endl;
+            cout << "$Stock Price in AUD: $" << stock->at(i)->get_amount() << endl;
+            cout << "$Amount you own: " << stock->at(i)->get_stock() << endl;
+            cout << endl;
+            return;
+        }
+    }
+    cout << "Sorry, but it seems that you don't own any of this stock." << endl;
+    cout << "To get more information on the specific stock, type:" << endl;
+    cout << endl;
+    cout << "display stock [stock name]" << endl;
+    cout << endl;
 }
 
-void sell_stock(Stock* new_stock, int stock_amount) {
-
-}
-
-void listdata(Stock* stock_type) {
-
-}
-
-void listdata() {
-
+void User::list_data() {
+    for (int i = 0; i < stock->size(); i++) {
+        cout << "$Stock Name: " << stock->at(i)->get_name() << endl;
+        cout << "$Stock Producer: " << stock->at(i)->get_data() << endl;
+        cout << "$Stock Price in AUD: $" << stock->at(i)->get_amount() << endl;
+        cout << "$Amount you own: " << stock->at(i)->get_stock() << endl;
+        cout << endl;
+    }
 }
 
 string User::get_name() {return name;}

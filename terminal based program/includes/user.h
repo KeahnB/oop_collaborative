@@ -7,10 +7,9 @@
 #include "stock.h"
 
 class User : public Data
-{   
-private:
-    vector<Stock*> *stock; 
+{     
 public:
+    vector<Stock*> *stock;
     User();
     User(string, string, double);
     User(string, string, double, vector<Stock*>);
@@ -21,9 +20,8 @@ public:
     void set_name(string);
     void set_data(string);
     void set_amount(double);
-    void buy_stock(Stock* int);
-    void sell_stock(Stock*, int);
-    void listdata();
+    void list_data();
+    void list_data(Stock*);
 
     ~User();
 };

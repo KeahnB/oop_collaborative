@@ -71,25 +71,49 @@ void Interface::user_command(vector<string> commands) {
     }
 }
 
-void Interface::read_stock() {
-    ifstream inFile("stock.csv");
-    string data;
-    while (getline(inFile, data))
-    {
-        vector<string> line;
-        istringstream ss(data);
-        string temp;
-        while (getline(ss, temp, ','))
-            line.push_back(temp);
-        Stock *stock_obj = new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3)));
-        avaliable_stock->push_back(stock_obj);
+void Interface::delete_stock()
+{
+    if (user->get_name() == "N/A") {
+        cout << "$You must login as a stock owner to use this command" << endl;
+        cout << endl;
+        return;
     }
+    string stock_name;
+    cout << "$Enter stock name you want to add: " << endl;
+    getline(cin, stock_name);
+    int pos = 0;
+    for (int i = 0; i < avaliable_stock->size(); i++)
+    {
+        if (stock_name == avaliable_stock->at(i)->get_name())
+        {
+            if (!(avaliable_stock->at(i)->get_data() == user->get_name()))
+            {
+                cout << "$Error: could not delete " << stock_name << endl;
+                cout << "$The stock you tried to delete does not belong to you" << endl;
+                cout << endl;
+                return;
+            } 
+            pos = i;         
+        }
+    }
+    string check;
+    cout << "$Are you sure you want to delete the " << stock_name << " stock" << endl;
+    cout << "Once you delete the stock, it can not be retrieved" << endl;
+    cout << "Enter Yes or No" << endl;
+    getline(cin, check);
+    if (check == "No") {
+        cout << "Deletion of " << stock_name << " canceled" << endl;
+        cout << endl;
+        return;
+    }
+    delete avaliable_stock->at(pos);
+    write_stock();
 }
 
 void Interface::create_stock()
 {
     if (user->get_name() == "N/A") {
-        cout << "You must login as a user to use this command" << endl;
+        cout << "$You must login as a user to use this command" << endl;
         cout << endl;
         return;
     }
@@ -116,9 +140,24 @@ void Interface::create_stock()
     write_stock();
 }
 
+void Interface::read_stock() {
+    ifstream inFile("stock.csv");
+    string data;
+    while (getline(inFile, data))
+    {
+        vector<string> line;
+        istringstream ss(data);
+        string temp;
+        while (getline(ss, temp, ','))
+            line.push_back(temp);
+        Stock *stock_obj = new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3)));
+        avaliable_stock->push_back(stock_obj);
+    }
+}
+
 void Interface::write_stock() {
     ofstream outFile;
-    outFile.open("stock.csv", ios::out | ios::trunc);
+    outFile.open("files/stock.csv", ios::out | ios::trunc);
     for (int i = 0; i < avaliable_stock->size(); i++)
     {
         outFile << avaliable_stock->at(i)->get_name() << ',';

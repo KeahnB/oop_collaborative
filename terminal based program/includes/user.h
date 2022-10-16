@@ -21,7 +21,7 @@ public:
     void set_data(string);
     void set_amount(double);
     void list_data();
-    void list_data(Stock *);
+    void list_data(string);
 
     ~User();
 };

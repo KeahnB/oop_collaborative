@@ -26,11 +26,11 @@ User::User(string new_name, string new_data, double new_amount, vector<Stock *> 
     *stock = new_stock;
 }
 
-void User::list_data(Stock *stock_type)
+void User::list_data(string compair_name)
 {
     for (int i = 0; i < stock->size(); i++)
     {
-        if (stock->at(i)->get_name() == stock_type->get_name())
+        if (stock->at(i)->get_name() == compair_name)
         {
             cout << "$Stock Name: " << stock->at(i)->get_name() << endl;
             cout << "$Stock Producer: " << stock->at(i)->get_data() << endl;
@@ -40,10 +40,10 @@ void User::list_data(Stock *stock_type)
             return;
         }
     }
-    cout << "Sorry, but it seems that you don't own any of this stock." << endl;
-    cout << "To get more information on the specific stock, type:" << endl;
+    cout << "$Sorry, but it seems that you don't own any of this stock." << endl;
+    cout << "$To get more information on the specific stock, type:" << endl;
     cout << endl;
-    cout << "display stock [stock name]" << endl;
+    cout << "$user stock [stock name]" << endl;
     cout << endl;
 }
 

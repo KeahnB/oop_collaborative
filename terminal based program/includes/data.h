@@ -2,10 +2,9 @@
 #define DATA_H
 
 #include <iostream>
-#include "listdata.h"
 using namespace std;
 
-class Data : public Listdata
+class Data
 {
 protected:
     string name;   // name of user or stock owner

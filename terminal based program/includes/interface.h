@@ -18,7 +18,7 @@ class Interface : public Listdata
 private:
     User * user;
 public:
-    vector<Stock*> avaliable_stock;
+    vector<Stock*> *avaliable_stock;
     //default constructor
     Interface::Interface();
     //recieves pointer to user that will be used
@@ -40,7 +40,7 @@ public:
     //displays all stocks avaliable for the user to buy
     void list_data();
     //displays information on a specific stock selected by the user
-    void list_data(Stock*);
+    void list_data(string);
     //creates new user
     void create_user();
     //deletes user
@@ -48,7 +48,7 @@ public:
     //creates new stock
     void create_stock();
     //deletes stock
-    void delete_stock(Stock*);
+    void delete_stock(string);
     //holds commands that changes or displays user data
     void user_command(vector<string>);
     //displays error depending on what error was occured
@@ -61,6 +61,8 @@ public:
     void stock_command(vector<string>);
     //reads the stock csv and stores the data in an Stock object vector
     void read_stock();
+    //writes the stock data store in the stock vector to the stock csv file
+    void write_stock();
 };
 
 #endif

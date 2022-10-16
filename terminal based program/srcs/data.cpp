@@ -1,6 +1,7 @@
 #include "data.h"
 
-Data::Data() {
+Data::Data()
+{
     name = "N/A";
     data = "N/A";
     amount = 0;

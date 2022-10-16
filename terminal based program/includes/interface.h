@@ -13,19 +13,20 @@
 
 using namespace std;
 
-class Interface {
+class Interface
+{
 
 public:
-    //displays useful information to the user when program is initialized
+    // displays useful information to the user when program is initialized
     void start();
-    //runs console until exited
+    // runs console until exited
     void console();
-    //gets input from user through command line and stores the words in a vector
+    // gets input from user through command line and stores the words in a vector
     vector<string> commandInput();
-    
-    void buy_stock(Stock* new_stock, int stock_amount);
 
-    void sell_stock(Stock* new_stock, int stock_amount);
+    void buy_stock(Stock *new_stock, int stock_amount);
+
+    void sell_stock(Stock *new_stock, int stock_amount);
 
     bool commandProcess(vector<string> command);
 };

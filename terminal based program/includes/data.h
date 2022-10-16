@@ -20,7 +20,7 @@ public:
     virtual void set_name(string) = 0;
     virtual void set_data(string) = 0;
     virtual void set_amount(double) = 0;
-    
+
     Data();
     Data(string, string, double);
 

@@ -3,9 +3,11 @@
 
 #include "data.h"
 
-class Stock : public Data {
+class Stock : public Data
+{
 private:
     int stock;
+
 public:
     Stock();
     Stock(string, string, double, int);
@@ -13,11 +15,11 @@ public:
     string get_data();
     double get_amount();
     int get_stock();
-    
-    void set_name();
-    void set_data();
-    void set_amount();
-    void set_stock();
+
+    void set_name(string);
+    void set_data(string);
+    void set_amount(double);
+    void set_stock(int);
 
     ~Stock();
 };

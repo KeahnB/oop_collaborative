@@ -32,10 +32,10 @@ bool Interface::commandProcess(vector<string> commands){
 
 };
 
-void buy_stock(Stock* new_stock, int stock_amount) {
-
+void buy_stock(Stock *new_stock, int stock_amount)
+{
 }
 
-void sell_stock(Stock* new_stock, int stock_amount) {
-
+void sell_stock(Stock *new_stock, int stock_amount)
+{
 }

@@ -14,4 +14,5 @@ Data::Data(string new_name, string new_data, double new_amount)
     amount = new_amount;
 }
 
+
 Data::~Data(){};

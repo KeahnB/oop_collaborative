@@ -30,11 +30,11 @@ public:
     // gets input from user through command line and stores the words in a vector
     vector<string> commandInput();
     //attempts to buy stock and store it in the current user
-    void buy_stock(Stock *new_stock, int stock_amount);
+    void buy_stock(string, int);
     //attempts to sell stock from the user
-    void sell_stock(Stock *new_stock, int stock_amount);
+    void sell_stock(string, int);
     //runs through the different protocalls for the user command input
-    bool commandProcess(vector<string> command);
+    bool commandProcess(vector<string>);
     //displays a help screen
     void help();
     //displays all stocks avaliable for the user to buy
@@ -48,7 +48,7 @@ public:
     //creates new stock
     void create_stock();
     //deletes stock
-    void delete_stock(string);
+    void delete_stock();
     //holds commands that changes or displays user data
     void user_command(vector<string>);
     //displays error depending on what error was occured
@@ -63,6 +63,10 @@ public:
     void read_stock();
     //writes the stock data store in the stock vector to the stock csv file
     void write_stock();
+    //reads user csv file and stores into user object
+    void read_user();
+    //writes the user object to the user csv
+    void write_user();
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include "listdata.h"
 using namespace std;
 
-class Data : :Listdata
+class Data : public Listdata
 {
 protected:
     string name;   // name of user or stock owner

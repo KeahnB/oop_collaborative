@@ -47,11 +47,10 @@ bool Interface::commandProcess(vector<string> commands) {
 }
 
 void Interface::user_command(vector<string> commands) {
-    if (commands.size() == 1) {error(commands); return;}
+    if (commands.size() == 1) { return;} //add error command
     if (commands.size() == 2) {
         if (commands.at(1) == "stock") {user->list_data(); return;}
         if (commands.at(1) == "delete") {delete_user(); return;}
-        error(commands);
         return;
     }
     if (commands.size() == 3) {
@@ -69,6 +68,121 @@ void Interface::user_command(vector<string> commands) {
             cout << endl;
         }
     }
+}
+
+void Interface::login() {
+    if (!(user->get_name() == "N/A")) {
+        cout << endl;
+        cout << "$You must logout in order to login to a new account" << endl;
+        cout << endl;
+        return;
+    }
+    cout << "$Enter your username: " << endl;
+    cout << "$";
+    string input;
+    getline(cin, input);
+    cout << endl;
+    user->set_name(input);
+    ifstream inFile("files/" + input + ".csv");
+    if (!inFile.good())
+    {
+        cout << "$Error: The user " << input << " was not found" << endl;
+        cout << endl;
+        return;
+    }    
+    read_user();
+    cout << "$Enter your password: " << endl;
+    cout << "$";
+    getline(cin, input);
+    cout << endl;
+    if (!(user->get_data() == input)) {
+        cout << "$Your password was incorrect" << endl;
+        cout << endl;
+        user->set_name("default");
+        read_user();
+        return;
+    }
+    cout << "$Success" << endl;
+    cout << "$You are now logged in as " << user->get_name();
+    cout << endl;
+}
+
+void Interface::create_user() {
+    if (!(user->get_name() == "N/A")) {
+        cout << endl;
+        cout << "$You must logout in order to create to a new account" << endl;
+        cout << endl;
+        return;
+    }
+    cout << "$Enter new username: " << endl;
+    cout << "$";
+    string username;
+    getline(cin, username);
+    cout << endl;
+    ifstream inFile("files/" + username + ".csv");
+    if (inFile.good())
+    {
+        cout << "$Error: The user " << username << " already exists" << endl;
+        cout << endl;
+        return;
+    }
+    cout << "$Enter password: " << endl;
+    cout << "$";
+    string input;
+    getline(cin, input);
+    cout << endl;
+    cout << "$Enter amount of money you want to put in: " << endl;
+    cout << "$";
+    string money_str;
+    getline(cin, money_str);
+    cout << endl;
+    vector<Stock*> *stock_obj;
+    User * user_obj = new User(username, input, stod(money_str), *stock_obj);
+    user = user_obj;
+    write_user();
+    cout << "$Success" << endl;
+    cout << "$You are now signed in as " << user->get_name();
+    cout << endl;
+}
+
+void Interface::logout() {
+    cout << endl;
+    cout << "$You have been logged out of " << user->get_name() << endl;
+    cout << endl;
+    user->set_name("default");
+    read_user();
+}
+
+void Interface::delete_user() {
+    if (!(user->get_name() == "N/A")) {
+        cout << endl;
+        cout << "$You must be logged in to the user account to delete it" << endl;
+        cout << endl;
+        return;
+    }
+    if (!(user->stock->size() == 0)) {
+        cout << endl;
+        cout << "All your stocks must be sold before deleting the account" << endl;
+        cout << endl;
+        return;
+    }
+    cout << endl;
+    cout << "$Are you sure you want to delete this user" << endl;
+    cout << "$Once you delete the user, it can not be retrieved" << endl;
+    cout << "$Enter Yes or No" << endl;
+    cout << "$";
+    string check;
+    getline(cin, check);
+    if (check == "No") {
+        cout << "$Deletion of " << user->get_name() << " canceled" << endl;
+        cout << endl;
+        return;
+    }
+    cout << "$" << user->get_name() << " has been deleted" << endl;
+    cout << endl;
+    remove(("files/" +  user->get_name() + ".csv").c_str());
+    user->set_name("default");
+    read_user();
 }
 
 void Interface::delete_stock()
@@ -193,7 +307,7 @@ void Interface::read_user()
     ifstream inFile("files/" + user->get_name() + ".csv");
     string data;
     vector<string> user_line;
-    vector<Stock*> *temp_stock_list;
+    vector<Stock*> *temp_stock_list = new vector<Stock*>;
     bool is_line = true;
     while (getline(inFile, data))
     {
@@ -206,8 +320,11 @@ void Interface::read_user()
             user_line = line;
             is_line = false;
         }
-        Stock *stock_obj = new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3)));
-        temp_stock_list->push_back(stock_obj);
+        else
+        {
+            Stock *stock_obj = new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3)));
+            temp_stock_list->push_back(stock_obj);
+        }
     }
     User *temp_new_user = new User(user_line.at(0), user_line.at(1), stod(user_line.at(2)), *temp_stock_list);
     delete user;
@@ -301,8 +418,4 @@ void Interface::sell_stock(string new_stock, int stock_amount)
     write_stock();
     write_user();
     return;
-}
-
-void Interface::error(vector<string> error) {
-
 }

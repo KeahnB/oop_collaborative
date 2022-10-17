@@ -6,6 +6,8 @@
 #include <sstream>
 #include <any>
 #include <utility>
+#include <string>
+#include <filesystem>
 #include <fstream>
 #include "stock.h"
 #include "listdata.h"
@@ -51,8 +53,6 @@ public:
     void delete_stock();
     //holds commands that changes or displays user data
     void user_command(vector<string>);
-    //displays error depending on what error was occured
-    void error(vector<string>);
     //asks for username and password then sets the user object to the saved user
     void login();
     //changes back to new user object

@@ -11,19 +11,12 @@ User::User()
 
 User::User(string new_name, string new_data, double new_amount)
 {
+    cout << "test user" << endl;
     name = new_name;
     data = new_data;
     amount = new_amount;
     stock = new vector<Stock *>;
     stock->clear();
-}
-
-User::User(string new_name, string new_data, double new_amount, vector<Stock *> new_stock)
-{
-    name = new_name;
-    data = new_data;
-    amount = new_amount;
-    *stock = new_stock;
 }
 
 void User::list_data(string compair_name)
@@ -66,3 +59,4 @@ double User::get_amount() { return amount; }
 void User::set_name(string new_name) { name = new_name; }
 void User::set_data(string new_data) { data = new_data; }
 void User::set_amount(double new_amount) { amount = new_amount; }
+User::~User() {};

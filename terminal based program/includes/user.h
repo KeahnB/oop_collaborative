@@ -12,7 +12,6 @@ public:
     vector<Stock *> *stock;
     User();
     User(string, string, double);
-    User(string, string, double, vector<Stock *>);
     string get_name();
     string get_data();
     double get_amount();

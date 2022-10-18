@@ -25,6 +25,7 @@ bool Stock::is_init() {
     if (init_stock == stock) {return true;}
     return false;
 }
+void Stock::list_data() {};
 
 void Stock::set_name(string new_name) { name = new_name; }
 void Stock::set_data(string new_data) { data = new_data; }

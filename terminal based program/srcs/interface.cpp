@@ -1,13 +1,12 @@
 #include "interface.h"
 
 Interface::Interface() {}
-//Sets pointer to user that will be used
-Interface::Interface(User* user) :user(user) {}
+// Sets pointer to user that will be used
+Interface::Interface(User *user) : user(user) {}
 
 void Interface::console()
 {
     read_stock();
-    start();
     vector<string> command;
     do
     {
@@ -34,13 +33,15 @@ vector<string> Interface::commandInput()
     return commands;
 }
 
-void Interface::start() {
+void Interface::start()
+{
     cout << "Welcome to Sneed's stock exchange" << endl;
     cout << "For help, type: help" << endl;
     cout << endl;
 }
 
-void Interface::help() {
+void Interface::help()
+{
     cout << endl;
     cout << "List of commands:" << endl;
     cout << "Login to user:" << endl;
@@ -52,7 +53,7 @@ void Interface::help() {
     cout << "Delete user:" << endl;
     cout << "user \"delete\"" << endl;
     cout << "Command to buy stock:" << endl;
-    cout << "buy \"stock nmae\" \"amount to buy\"" << endl;
+    cout << "buy \"stock name\" \"amount to buy\"" << endl;
     cout << "Command to sell stock:" << endl;
     cout << "sell \"stock name\" \"amount to sell\"" << endl;
     cout << "Command to view specific avaliable stock:" << endl;
@@ -72,12 +73,26 @@ void Interface::help() {
     cout << endl;
 }
 
-bool Interface::commandProcess(vector<string> commands) {
-    if (commands.size() == 0) {return 1;}
-    if (commands.at(0) == "user") {user_command(commands); return 1;}
-    if (commands.at(0) == "login") {login(); return 1;}
-    if (commands.at(0) == "sell") {
-        if (!(commands.size() == 3)) {
+bool Interface::commandProcess(vector<string> commands)
+{
+    if (commands.size() == 0)
+    {
+        return 1;
+    }
+    if (commands.at(0) == "user")
+    {
+        user_command(commands);
+        return 1;
+    }
+    if (commands.at(0) == "login")
+    {
+        login();
+        return 1;
+    }
+    if (commands.at(0) == "sell")
+    {
+        if (!(commands.size() == 3))
+        {
             cout << "Error: incorrect formating" << endl;
             cout << "To sell stock, type:" << endl;
             cout << "sell \"stock name\" \"amount to sell\"" << endl;
@@ -87,8 +102,10 @@ bool Interface::commandProcess(vector<string> commands) {
         sell_stock(commands.at(1), stoi(commands.at(2)));
         return 1;
     }
-    if (commands.at(0) == "buy") {
-        if (!(commands.size() == 3)) {
+    if (commands.at(0) == "buy")
+    {
+        if (!(commands.size() == 3))
+        {
             cout << "Error: incorrect formating" << endl;
             cout << "To buy stock, type:" << endl;
             cout << "buy \"stock name\" \"amount to sell\"" << endl;
@@ -98,28 +115,50 @@ bool Interface::commandProcess(vector<string> commands) {
         buy_stock(commands.at(1), stoi(commands.at(2)));
         return 1;
     }
-    if (commands.at(0) == "logout") {logout(); return 1;}
-    if (commands.at(0) == "sign-up") {create_user(); return 1;}
-    if (commands.at(0) == "stock") {stock_command(commands); return 1;}
-    if (commands.at(0) == "exit") {return 0;}
+    if (commands.at(0) == "logout")
+    {
+        logout();
+        return 1;
+    }
+    if (commands.at(0) == "sign-up")
+    {
+        create_user();
+        return 1;
+    }
+    if (commands.at(0) == "stock")
+    {
+        stock_command(commands);
+        return 1;
+    }
+    if (commands.at(0) == "help") {help(); return 1;}
+    if (commands.at(0) == "exit")
+    {
+        return 0;
+    }
     cout << commands.at(0) << " is not valid command." << endl;
     cout << "Please refer to the \"help\" for a list of avaliable commands" << endl;
     cout << endl;
+    return 1;
 }
 
-void Interface::user_command(vector<string> commands) {
+void Interface::user_command(vector<string> commands)
+{
     cout << endl;
-    if (commands.size() == 1) { 
+    if (commands.size() == 1)
+    {
         cout << "Error: Incorrect command input" << endl;
         cout << "To show user commands type: \"help\"" << endl;
         cout << endl;
         return;
     }
-    if (commands.size() == 3) {
+    if (commands.size() == 3)
+    {
         if (commands.at(1) == "stock")
         {
-            for (int i = 0; i = user->stock->size(); i++) {
-                if (user->stock->at(i)->get_name() == commands.at(2)) {
+            for (int i = 0; i = user->stock->size(); i++)
+            {
+                if (user->stock->at(i)->get_name() == commands.at(2))
+                {
                     user->list_data(user->stock->at(i)->get_name());
                     return;
                 }
@@ -130,11 +169,22 @@ void Interface::user_command(vector<string> commands) {
             cout << endl;
         }
     }
-    if (commands.size() == 2) {
-        if (commands.at(1) == "stock") {user->list_data(); return;}
-        if (commands.at(1) == "delete") {delete_user(); return;}
-        if (commands.at(1) == "information") {
-            if (user->get_name() == "N/A") {
+    if (commands.size() == 2)
+    {
+        if (commands.at(1) == "stock")
+        {
+            user->list_data();
+            return;
+        }
+        if (commands.at(1) == "delete")
+        {
+            delete_user();
+            return;
+        }
+        if (commands.at(1) == "information")
+        {
+            if (user->get_name() == "N/A")
+            {
                 cout << "You must be logged into use this command" << endl;
                 cout << endl;
                 return;
@@ -147,48 +197,72 @@ void Interface::user_command(vector<string> commands) {
     }
     cout << "Command input was incorrect" << endl;
     cout << "For information on commands, type: \"help\"" << endl;
-    cout << endl; 
+    cout << endl;
 }
 
-void Interface::stock_command(vector<string> commands) {
+void Interface::stock_command(vector<string> commands)
+{
     cout << endl;
-    if (commands.size() == 1) {
+    if (commands.size() == 1)
+    {
         cout << "Error: Incorrect command input" << endl;
         cout << "To show user commands type: \"help\"" << endl;
         cout << endl;
         return;
     }
-    if (commands.size() == 3) {
-        if (commands.at(1) == "view") {list_data(commands.at(2)); return;}
+    if (commands.size() == 3)
+    {
+        if (commands.at(1) == "view")
+        {
+            list_data(commands.at(2));
+            return;
+        }
     }
-    if (commands.size() == 2) {
-        if (commands.at(1) == "view") {list_data(); return;}
-        if (commands.at(1) == "create") {create_stock(); return;}
-        if (commands.at(1) == "delete") {delete_stock(); return;}
+    if (commands.size() == 2)
+    {
+        if (commands.at(1) == "view")
+        {
+            list_data();
+            return;
+        }
+        if (commands.at(1) == "create")
+        {
+            create_stock();
+            return;
+        }
+        if (commands.at(1) == "delete")
+        {
+            delete_stock();
+            return;
+        }
     }
     cout << "Command input was incorrect" << endl;
     cout << "For information on commands, type: \"help\"" << endl;
-    cout << endl;    
+    cout << endl;
 }
 
-void Interface::list_data() {
-    for (int i = 0; i < avaliable_stock->size(); i++) {
-        cout << "Stock name: " << avaliable_stock->at(i)->get_name() << endl;
-        cout << "Stock owner: " << avaliable_stock->at(i)->get_data() << endl;
-        cout << "Stock price: " << avaliable_stock->at(i)->get_amount() << endl;
-        cout << "Stock amount: " << avaliable_stock->at(i)->get_stock() << endl;
-        cout << endl;
-    }        
-}
-
-void Interface::list_data(string _name) {
-    for (int i = 0; i < avaliable_stock->size(); i++)
+void Interface::list_data()
+{
+    for (int i = 0; i < avaliable_stock.size(); i++)
     {
-        if (avaliable_stock->at(i)->get_name() == _name) {
-            cout << "Stock name: " << avaliable_stock->at(i)->get_name() << endl;
-            cout << "Stock owner: " << avaliable_stock->at(i)->get_data() << endl;
-            cout << "Stock price: " << avaliable_stock->at(i)->get_amount() << endl;
-            cout << "Stock amount: " << avaliable_stock->at(i)->get_stock() << endl;
+        cout << "Stock name: " << avaliable_stock.at(i)->get_name() << endl;
+        cout << "Stock owner: " << avaliable_stock.at(i)->get_data() << endl;
+        cout << "Stock price: " << avaliable_stock.at(i)->get_amount() << endl;
+        cout << "Stock amount: " << avaliable_stock.at(i)->get_stock() << endl;
+        cout << endl;
+    }
+}
+
+void Interface::list_data(string _name)
+{
+    for (int i = 0; i < avaliable_stock.size(); i++)
+    {
+        if (avaliable_stock.at(i)->get_name() == _name)
+        {
+            cout << "Stock name: " << avaliable_stock.at(i)->get_name() << endl;
+            cout << "Stock owner: " << avaliable_stock.at(i)->get_data() << endl;
+            cout << "Stock price: " << avaliable_stock.at(i)->get_amount() << endl;
+            cout << "Stock amount: " << avaliable_stock.at(i)->get_stock() << endl;
             cout << endl;
             return;
         }
@@ -199,8 +273,10 @@ void Interface::list_data(string _name) {
     cout << endl;
 }
 
-void Interface::login() {
-    if (!(user->get_name() == "N/A")) {
+void Interface::login()
+{
+    if (!(user->get_name() == "N/A"))
+    {
         cout << endl;
         cout << "You must logout in order to login to a new account" << endl;
         cout << endl;
@@ -218,13 +294,14 @@ void Interface::login() {
         cout << "Error: The user " << input << " was not found" << endl;
         cout << endl;
         return;
-    }    
+    }
     read_user();
     cout << "Enter your password: " << endl;
     cout << "$ ";
     getline(cin, input);
     cout << endl;
-    if (!(user->get_data() == input)) {
+    if (!(user->get_data() == input))
+    {
         cout << "Your password was incorrect" << endl;
         cout << endl;
         user->set_name("default");
@@ -236,8 +313,10 @@ void Interface::login() {
     cout << endl;
 }
 
-void Interface::create_user() {
-    if (!(user->get_name() == "N/A")) {
+void Interface::create_user()
+{
+    if (!(user->get_name() == "N/A"))
+    {
         cout << endl;
         cout << "You must logout in order to create to a new account" << endl;
         cout << endl;
@@ -265,8 +344,9 @@ void Interface::create_user() {
     string money_str;
     getline(cin, money_str);
     cout << endl;
-    vector<Stock*> *stock_obj;
-    User * user_obj = new User(username, input, stod(money_str), *stock_obj);
+    cout << "test1" << endl;
+    User *user_obj = new User(username, input, stod(money_str));
+    cout << "test2" << endl;
     user = user_obj;
     write_user();
     cout << "Success" << endl;
@@ -274,7 +354,8 @@ void Interface::create_user() {
     cout << endl;
 }
 
-void Interface::logout() {
+void Interface::logout()
+{
     cout << endl;
     cout << "You have been logged out of " << user->get_name() << endl;
     cout << endl;
@@ -282,14 +363,17 @@ void Interface::logout() {
     read_user();
 }
 
-void Interface::delete_user() {
-    if (!(user->get_name() == "N/A")) {
+void Interface::delete_user()
+{
+    if (!(user->get_name() == "N/A"))
+    {
         cout << endl;
         cout << "You must be logged in to the user account to delete it" << endl;
         cout << endl;
         return;
     }
-    if (!(user->stock->size() == 0)) {
+    if (!(user->stock->size() == 0))
+    {
         cout << endl;
         cout << "All your stocks must be sold before deleting the account" << endl;
         cout << endl;
@@ -302,21 +386,23 @@ void Interface::delete_user() {
     cout << "$ ";
     string check;
     getline(cin, check);
-    if (check == "No") {
+    if (check == "No")
+    {
         cout << "Deletion of " << user->get_name() << " canceled" << endl;
         cout << endl;
         return;
     }
     cout << user->get_name() << " has been deleted" << endl;
     cout << endl;
-    remove(("files/" +  user->get_name() + ".csv").c_str());
+    remove(("files/" + user->get_name() + ".csv").c_str());
     user->set_name("default");
     read_user();
 }
 
 void Interface::delete_stock()
 {
-    if (user->get_name() == "N/A") {
+    if (user->get_name() == "N/A")
+    {
         cout << "$You must login as a stock owner to use this command" << endl;
         cout << endl;
         return;
@@ -326,28 +412,30 @@ void Interface::delete_stock()
     cout << "$ ";
     getline(cin, stock_name);
     int pos = -1;
-    for (int i = 0; i < avaliable_stock->size(); i++)
+    for (int i = 0; i < avaliable_stock.size(); i++)
     {
-        if (stock_name == avaliable_stock->at(i)->get_name())
+        if (stock_name == avaliable_stock.at(i)->get_name())
         {
-            if (!(avaliable_stock->at(i)->get_data() == user->get_name()))
+            if (!(avaliable_stock.at(i)->get_data() == user->get_name()))
             {
                 cout << "Error: could not delete " << stock_name << endl;
                 cout << "The stock you tried to delete does not belong to you" << endl;
                 cout << endl;
                 return;
             }
-            if (!(avaliable_stock->at(i)->is_init())){
+            if (!(avaliable_stock.at(i)->is_init()))
+            {
                 cout << "Error: could not delete " << stock_name << endl;
                 cout << "The stock you tried to delete has already been distributed and cannot be deleted" << endl;
                 cout << endl;
                 return;
             }
-            pos = i;  
-            break;       
+            pos = i;
+            break;
         }
     }
-    if (pos = -1) {
+    if (pos = -1)
+    {
         cout << stock_name << " could not be found in the system" << endl;
         cout << "To check all avaliable stocks, type:" << endl;
         cout << "stock view" << endl;
@@ -360,12 +448,13 @@ void Interface::delete_stock()
     cout << "Enter Yes or No" << endl;
     cout << "$ ";
     getline(cin, check);
-    if (check == "No") {
+    if (check == "No")
+    {
         cout << "Deletion of " << stock_name << " canceled" << endl;
         cout << endl;
         return;
     }
-    avaliable_stock->erase(avaliable_stock->begin()+pos);
+    avaliable_stock.erase(avaliable_stock.begin() + pos);
     cout << stock_name << " has been deleted" << endl;
     cout << endl;
     write_stock();
@@ -373,7 +462,8 @@ void Interface::delete_stock()
 
 void Interface::create_stock()
 {
-    if (user->get_name() == "N/A") {
+    if (user->get_name() == "N/A")
+    {
         cout << "You must login as a user to use this command" << endl;
         cout << endl;
         return;
@@ -382,9 +472,9 @@ void Interface::create_stock()
     cout << "Enter stock name you want to add: " << endl;
     cout << "$ ";
     getline(cin, stock_name);
-    for (int i = 0; i < avaliable_stock->size(); i++)
+    for (int i = 0; i < avaliable_stock.size(); i++)
     {
-        if (stock_name == avaliable_stock->at(i)->get_name())
+        if (stock_name == avaliable_stock.at(i)->get_name())
         {
             cout << "The stock you tried to create already exists in the system" << endl;
             cout << "Please choose a different name for the stock" << endl;
@@ -400,11 +490,12 @@ void Interface::create_stock()
     cout << "$ ";
     getline(cin, stock_amount);
     Stock *stock_obj = new Stock(stock_name, user->get_name(), stod(stock_price), stoi(stock_amount));
-    avaliable_stock->push_back(stock_obj);
+    avaliable_stock.push_back(stock_obj);
     write_stock();
 }
 
-void Interface::read_stock() {
+void Interface::read_stock()
+{
     ifstream inFile("files/stock.csv");
     string data;
     while (getline(inFile, data))
@@ -414,29 +505,37 @@ void Interface::read_stock() {
         string temp;
         while (getline(ss, temp, ','))
             line.push_back(temp);
-        Stock *stock_obj = new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3)));
-        avaliable_stock->push_back(stock_obj);
+        avaliable_stock.push_back(new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3))));
     }
 }
 
-void Interface::write_stock() {
+void Interface::write_stock()
+{
     ofstream outFile;
     outFile.open("files/stock.csv", ios::out | ios::trunc);
-    for (int i = 0; i < avaliable_stock->size(); i++)
+    for (int i = 0; i < avaliable_stock.size(); i++)
     {
-        outFile << avaliable_stock->at(i)->get_name() << ',';
-        outFile << avaliable_stock->at(i)->get_data() << ',';
-        outFile << avaliable_stock->at(i)->get_amount() << ',';
-        outFile << avaliable_stock->at(i)->get_stock() << '\n';
+        outFile << avaliable_stock.at(i)->get_name() << ',';
+        outFile << avaliable_stock.at(i)->get_data() << ',';
+        outFile << avaliable_stock.at(i)->get_amount() << ',';
+        outFile << avaliable_stock.at(i)->get_stock() << '\n';
     }
 }
 
 void Interface::read_user()
 {
+    cout << "test0" << endl;
+    cout << user->get_name() << endl;
     ifstream inFile("files/" + user->get_name() + ".csv");
     string data;
+    string user_temp;
     vector<string> user_line;
-    vector<Stock*> *temp_stock_list = new vector<Stock*>;
+    getline(inFile, data);
+    istringstream t_ss(data);
+    while (getline(t_ss, user_temp, ','))
+        user_line.push_back(user_temp);
+    User temp_new_user = User(user_line.at(0), user_line.at(1), stod(user_line.at(2)));
+    cout << "test2" << endl;
     bool is_line = true;
     while (getline(inFile, data))
     {
@@ -445,19 +544,14 @@ void Interface::read_user()
         string temp;
         while (getline(ss, temp, ','))
             line.push_back(temp);
-        if (is_line) {
-            user_line = line;
-            is_line = false;
-        }
-        else
-        {
-            Stock *stock_obj = new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3)));
-            temp_stock_list->push_back(stock_obj);
-        }
+        Stock *stock_obj = new Stock(line.at(0), line.at(1), stod(line.at(2)), stoi(line.at(3)));
+        temp_new_user.stock->push_back(stock_obj);
     }
-    User *temp_new_user = new User(user_line.at(0), user_line.at(1), stod(user_line.at(2)), *temp_stock_list);
     delete user;
-    user = temp_new_user;
+    user = &temp_new_user;
+    cout << "test 9" << endl;
+    cout << user->get_name() << endl;
+    cout << user->stock->at(0)->get_name();
 }
 
 void Interface::write_user()
@@ -478,15 +572,20 @@ void Interface::write_user()
 
 void Interface::buy_stock(string new_stock, int stock_amount)
 {
-    if (user->get_name() == "N/A") {
+    if (user->get_name() == "N/A")
+    {
         cout << "You must be logged in to access this command" << endl;
         cout << endl;
         return;
     }
     int pos = -1;
-    for (int i = 0; i < avaliable_stock->size(); i++)
-        if (avaliable_stock->at(i)->get_name() == new_stock) {pos = i; break;}
-    if (!(user->get_amount() >= stock_amount * avaliable_stock->at(pos)->get_amount()))
+    for (int i = 0; i < avaliable_stock.size(); i++)
+        if (avaliable_stock.at(i)->get_name() == new_stock)
+        {
+            pos = i;
+            break;
+        }
+    if (!(user->get_amount() >= stock_amount * avaliable_stock.at(pos)->get_amount()))
     {
         cout << "You do not have enough money to buy " << stock_amount << " of " << new_stock << endl;
         cout << "To show your amount of money, type:" << endl;
@@ -494,7 +593,8 @@ void Interface::buy_stock(string new_stock, int stock_amount)
         cout << endl;
         return;
     }
-    if (!(avaliable_stock->at(pos)->get_stock() >= stock_amount)) {
+    if (!(avaliable_stock.at(pos)->get_stock() >= stock_amount))
+    {
         cout << "There is currently not " << stock_amount << " avaliable " << new_stock << " stocks" << endl;
         cout << "To show the information on " << new_stock << ", type: " << endl;
         cout << "stock view " << new_stock << endl;
@@ -502,16 +602,17 @@ void Interface::buy_stock(string new_stock, int stock_amount)
         return;
     }
     for (int i = 0; i < user->stock->size(); i++)
-        if (new_stock == user->stock->at(i)->get_name()) {
+        if (new_stock == user->stock->at(i)->get_name())
+        {
             user->stock->at(i)->add_stock(stock_amount);
             cout << stock_amount << " " << new_stock << " stock brought successfully" << endl;
             cout << endl;
             return;
         }
-    avaliable_stock->at(pos)->remove_stock(stock_amount);
-    Stock *stock_obj = new Stock(new_stock, avaliable_stock->at(pos)->get_data(), avaliable_stock->at(pos)->get_amount(), stock_amount);
+    avaliable_stock.at(pos)->remove_stock(stock_amount);
+    Stock *stock_obj = new Stock(new_stock, avaliable_stock.at(pos)->get_data(), avaliable_stock.at(pos)->get_amount(), stock_amount);
     user->stock->push_back(stock_obj);
-    cout << stock_amount << " " <<  new_stock << " stock brought successfully" << endl;
+    cout << stock_amount << " " << new_stock << " stock brought successfully" << endl;
     cout << endl;
     write_stock();
     write_user();
@@ -520,15 +621,21 @@ void Interface::buy_stock(string new_stock, int stock_amount)
 
 void Interface::sell_stock(string new_stock, int stock_amount)
 {
-    if (user->get_name() == "N/A") {
+    if (user->get_name() == "N/A")
+    {
         cout << "You must be logged in to access this command" << endl;
         cout << endl;
         return;
     }
     int pos = -1;
     for (int i = 0; i < user->stock->size(); i++)
-        if (user->stock->at(i)->get_name() == new_stock) {pos = i; break;}
-    if (!(user->stock->at(pos)->get_stock() >= stock_amount)) {
+        if (user->stock->at(i)->get_name() == new_stock)
+        {
+            pos = i;
+            break;
+        }
+    if (!(user->stock->at(pos)->get_stock() >= stock_amount))
+    {
         cout << "You do not currently own " << stock_amount << " avaliable " << new_stock << " stocks" << endl;
         cout << "To show the information on your " << new_stock << " stock, type: " << endl;
         cout << "user stock " << new_stock << endl;
@@ -536,13 +643,19 @@ void Interface::sell_stock(string new_stock, int stock_amount)
         return;
     }
     int stock_pos = 0;
-    for (int i = 0; i < avaliable_stock->size(); i++)
-        if (new_stock == avaliable_stock->at(i)->get_name()) {stock_pos = i;}
-    avaliable_stock->at(stock_pos)->add_stock(stock_amount);
+    for (int i = 0; i < avaliable_stock.size(); i++)
+        if (new_stock == avaliable_stock.at(i)->get_name())
+        {
+            stock_pos = i;
+        }
+    avaliable_stock.at(stock_pos)->add_stock(stock_amount);
     user->stock->at(pos)->remove_stock(stock_amount);
     user->set_amount((user->get_amount()) * stock_amount);
-    if (user->stock->at(pos)->get_stock() == 0) {user->stock->erase(user->stock->begin()+pos);}
-    cout << stock_amount << " " <<  new_stock << " stock sold successfully" << endl;
+    if (user->stock->at(pos)->get_stock() == 0)
+    {
+        user->stock->erase(user->stock->begin() + pos);
+    }
+    cout << stock_amount << " " << new_stock << " stock sold successfully" << endl;
     cout << endl;
     write_stock();
     write_user();

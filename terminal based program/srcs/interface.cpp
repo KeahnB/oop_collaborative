@@ -183,7 +183,7 @@ void Interface::user_command(vector<string> commands)
         if (commands.at(1) == "stock")
         {
             //goes through all user stocks until specific stock has been found
-            for (int i = 0; i = user->stock->size(); i++)
+            for (int i = 0; i < user->stock->size(); i++)
             {
                 if (user->stock->at(i)->get_name() == commands.at(2))
                 {
